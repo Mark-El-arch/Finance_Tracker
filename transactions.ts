@@ -1,4 +1,4 @@
-import { Transaction, TransactionType, Tag, Month, TransactionFilters } from './types'
+import type { Transaction, TransactionType, Tag, Month, TransactionFilters } from './types.ts'
 
 const wallets = [ "BANK", "CASH", "MOMO"]
 
