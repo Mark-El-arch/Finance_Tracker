@@ -1,8 +1,8 @@
-import { transactions, filterTransactions, monthMap } from "./transactions.mjs";
-import { budgets, getAllBudgetStatuses, getBudgetStatus } from "./budget.mjs"
-import { addGoal,contributeToGoal,getGoalProgress,savingsGoals } from "./savings.mjs";
-import { getMonthlySummary, getCategoryBreakdown } from "./report.mjs";
-import { getDashboardSummary } from "./dashboard.mjs";
+import { transactions, filterTransactions, monthMap } from "./transactions.js";
+import { budgets, getAllBudgetStatuses, getBudgetStatus } from "./budget.js"
+import { addGoal,contributeToGoal,getGoalProgress,savingsGoals } from "./savings.js";
+import { getMonthlySummary, getCategoryBreakdown } from "./report.js";
+import { getDashboardSummary } from "./dashboard.js";
 
 // console.log("All Food:", filterTransactions({ category: "Food" }));
 // console.log("March only:", filterTransactions({ month: "MARCH" }));
