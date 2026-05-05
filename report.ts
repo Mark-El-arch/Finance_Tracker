@@ -1,16 +1,8 @@
-import { transactions, filterTransactions, monthMap } from "./transactions.mjs";
+import { transactions, filterTransactions, monthMap } from "./transactions.ts";
+import type { Month, GetMonthlySummary } from "./types.ts";
 
-/**
- * {
-    month: 
-    totalIncome:
-    totalExpense:
-    dailyAverageSpend:
-    netBalance
- * }
- */
 
-function getMonthlySummary(month) {
+function getMonthlySummary(month: Month): GetMonthlySummary {
     let monthTransactions = filterTransactions({month: month});
     let monthIncomes = monthTransactions.filter(transaction => transaction.transactionType == "INCOME");
     let totalMonthIncome = monthIncomes.reduce((sum, transaction) => sum + transaction.amount, 0);
@@ -29,14 +21,14 @@ function getMonthlySummary(month) {
     }
 }
 
-function getCategoryBreakdown(month) {
+function getCategoryBreakdown(month: Month) {
     let monthTransactions = filterTransactions({month: month});
     let monthExpenses = monthTransactions.filter(transaction => transaction.transactionType == "EXPENSE");
-    const categoryBreakdown = {};
+    const categoryBreakdown: {[key: string]: number} = {};
 
     monthExpenses.forEach(transaction => {
         if (categoryBreakdown[transaction.category]) {
-            categoryBreakdown[transaction.category] += transaction.amount
+            categoryBreakdown[transaction.category]! += transaction.amount
         } else {
             categoryBreakdown[transaction.category] = transaction.amount
         }
