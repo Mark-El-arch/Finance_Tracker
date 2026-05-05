@@ -1,15 +1,6 @@
-/**
- * {
- *  goalID: "",
- *  userID: "",
- *  name: "",
- *  targetAmount: "",
- *  savedAmount: "",
- *  deadline: "",
- * }
- */
+import type { SavingsGoal, GetGoalProgress, GoalStatus } from './types.ts'
 
-const savingsGoals = [
+const savingsGoals: SavingsGoal[] = [
     {
         goalID: 1,
         userID: 1,
@@ -36,7 +27,12 @@ const savingsGoals = [
     },
 ]
 
-function addGoal(userID, name, targetAmount, savedAmount, deadline) {
+function addGoal(
+    userID: number, 
+    name: string, 
+    targetAmount: number, 
+    savedAmount: number, 
+    deadline: string): SavingsGoal {
     let newGoal =  {
         goalID: savingsGoals.length + 1,
         userID,
@@ -51,29 +47,35 @@ function addGoal(userID, name, targetAmount, savedAmount, deadline) {
     return newGoal
 }
 
-function contributeToGoal(goalID, amount) {
+function contributeToGoal(goalID: number, amount: number): SavingsGoal | string{
     let goal = savingsGoals.find(goal => goal.goalID == goalID)
+    if (!goal) {
+        return `No goal of id ${goalID}`
+    }
     goal.savedAmount += amount;
     
     return goal;
 }
 
-function getGoalProgress(goalID) {
+function getGoalProgress(goalID: number): GetGoalProgress | string {
     let todayDate = new Date().toISOString();
     let goal = savingsGoals.find(goal => goal.goalID == goalID);
+    if (!goal) {
+        return `No Goal of id ${goalID}`
+    }
     let amountRemaining = goal.targetAmount - goal.savedAmount;
     let progressPercentage = (goal.savedAmount / goal.targetAmount) * 100;
     let deadline = goal.deadline;
-    let daysLeft = ((new Date(deadline) - new Date(todayDate)) / (1000*60*60*24));
+    let daysLeft = ((new Date(deadline).getTime() - new Date(todayDate).getTime()) / (1000*60*60*24));
     let dailyAmountNeeded = amountRemaining / daysLeft;
 
 
-    let status;
+    let status: GoalStatus;
     if (amountRemaining == 0) {
         status = "REACHED";
     } else if ((new Date() > new Date(deadline)) && (amountRemaining < goal.targetAmount)) {
         status = "OVERDUE";
-    } else if (amountRemaining < goal.targetAmount) {
+    } else {
         status = "ON TRACK";
     }
 
@@ -90,7 +92,7 @@ function getGoalProgress(goalID) {
     }
 }
 
-function getAllGoalProgress() {
+function getAllGoalProgress(): (GetGoalProgress | string)[] {
     return savingsGoals.map(goal => getGoalProgress(goal.goalID))
 }
 
