@@ -1,15 +1,4 @@
-/*
- *{
-    transactionID: "",
-    wallet: "",
-    category: "",
-    description: "",
-    amount: "",
-    createdAt: "",
-    transactionType (INCOME/EXPENSE): "",
-    tag(PERSONAL/BUSINESS): "",
-} 
- */
+import { Transaction, TransactionType, Tag, Month, TransactionFilters } from './types'
 
 const wallets = [ "BANK", "CASH", "MOMO"]
 
@@ -28,7 +17,7 @@ const monthMap = {
     DECEMBER: 11
 }
 
-const transactions = [
+const transactions: Transaction[] = [
     {
         transactionID: 1,
         wallet: "BANK",
@@ -61,7 +50,13 @@ const transactions = [
     },
 ]
 
-function addTransaction(wallet, category, description, amount, transactionType, tag) {
+function addTransaction(
+    wallet: string, 
+    category: string, 
+    description: string, 
+    amount: number, 
+    transactionType: TransactionType, 
+    tag: Tag): Transaction {
     let transaction = {
         transactionID: transactions.length + 1,
         wallet,
@@ -78,7 +73,7 @@ function addTransaction(wallet, category, description, amount, transactionType, 
 }
 
 
-function deleteTransaction(transactionID){
+function deleteTransaction(transactionID: number): string{
     let delTransaction = transactions.findIndex(transaction => transaction.transactionID == transactionID);
     transactions.splice(delTransaction, 1);
 
@@ -86,14 +81,17 @@ function deleteTransaction(transactionID){
 }
 
 
-function editTransaction(transactionID, updates){
+function editTransaction(transactionID: number, updates: Partial<Transaction>): Transaction | string{
     let transaction = transactions.find(transaction => transaction.transactionID == transactionID);
+    if (!transaction){
+        return `No such transaction with id ${transactionID}`
+    }
     Object.assign(transaction, updates)
 
     return transaction;
 }
 
-function getWalletBalance(walletName) {
+function getWalletBalance(walletName: string): number {
     let totalIncome = 0;
     let totalExpense = 0;
     const targetWallet = transactions.filter(transaction => transaction.wallet === walletName);
@@ -107,7 +105,7 @@ function getWalletBalance(walletName) {
 }
 
 
-function filterTransactions(filters){
+function filterTransactions(filters: TransactionFilters): Transaction[]{
     return transactions.filter(transaction =>
         ((!filters.wallet || transaction.wallet == filters.wallet) &&
          (!filters.transactionType || transaction.transactionType == filters.transactionType) && 
@@ -116,7 +114,7 @@ function filterTransactions(filters){
     
 }
 
-function getTotalBalance() {
+function getTotalBalance(): number{
     return wallets.reduce((sum, wallet) => sum + getWalletBalance(wallet), 0)
 }
 
