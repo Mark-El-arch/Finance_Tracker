@@ -45,4 +45,47 @@ interface TransactionFilters {
     month?: Month,
 }
 
-export { Transaction, TransactionType, Tag, Month, SavingsGoal, Budget, BudgetStatus, TransactionFilters }
+//GetBudgetStatus interface
+interface GetBudgetStatus {
+    category: string,
+    month: Month,
+    limit: number, 
+    spent: number,
+    remaining: number,
+    status: BudgetStatus,
+}
+
+//GoalProgress interface
+interface GetGoalProgress {
+    goalID: number, 
+    name: string,
+    targetAmount: number,
+    savedAmount: number,
+    amountRemaining: number,
+    progressPercentage: number,
+    deadline: string,
+    dailyAmountNeeded: number,
+    status: GoalStatus,
+}
+
+type GoalStatus = 'REACHED' | 'OVERDUE' | 'ON TRACK'
+
+
+//Monthly Summary interface
+interface GetMonthlySummary {
+    month: Month,
+    totalMonthIncome: number,
+    totalMonthExpense: number,
+    dailyAverageSpend: number,
+    netBalance: number,
+}
+
+//Dashboard Summary interface
+interface GetDashboardSummary {
+    "Total Balance": number,
+    "Budget Statuses": (GetBudgetStatus | string)[],
+    "Goal Progress": (GetGoalProgress | string)[],
+    "Monthly Summary": GetMonthlySummary,
+}
+
+export type { Transaction, GetGoalProgress, GetMonthlySummary, GetDashboardSummary, GoalStatus, TransactionType, Tag, Month, SavingsGoal, Budget, BudgetStatus, TransactionFilters, GetBudgetStatus }
