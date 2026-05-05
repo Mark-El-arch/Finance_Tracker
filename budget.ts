@@ -1,16 +1,9 @@
-import { filterTransactions, monthMap } from "./transactions.mjs"
+import { filterTransactions, monthMap } from "./transactions.ts"
+import type { Budget, BudgetStatus, GetBudgetStatus } from "./types.ts"
 
-/*
-*{
-    budgetID: "",
-    userID: "",
-    category: "",
-    limit: "",
-    month: "",
-}
- */
 
-const budgets = [
+
+const budgets: Budget[] = [
     {
         budgetID: 1,
         userID: 1,
@@ -34,20 +27,23 @@ const budgets = [
     },
 ]
 
-function getBudgetStatus(budgetID){
+function getBudgetStatus(budgetID: number): GetBudgetStatus | string{
     let categoryBudget = budgets.find(budget => budget.budgetID == budgetID);
+    if (!categoryBudget) {
+        return `No budget of id ${budgetID}`
+    }
     let allExpenses = filterTransactions({category: categoryBudget.category, month: categoryBudget.month, transactionType: "EXPENSE"});
     let expenseSum = allExpenses.reduce((sum, transaction) => sum + transaction.amount, 0);
     let remaining = categoryBudget.limit - expenseSum;
     let warningAmount = 0.8 * categoryBudget.limit;
-    let status;
+    let status: BudgetStatus;
 
     if (categoryBudget.limit < expenseSum) {
-        status = "EXCEEDED!";
+        status = "EXCEEDED";
     } else if (expenseSum > warningAmount) {
-        status = "WARNING!";
+        status = "WARNING";
     } else {
-        status = "OK!";
+        status = "OK";
     }
 
     return {
@@ -60,7 +56,7 @@ function getBudgetStatus(budgetID){
     }
 }
 
-function getAllBudgetStatuses() {
+function getAllBudgetStatuses(): (GetBudgetStatus | string)[]{
     return budgets.map(budget => getBudgetStatus(budget.budgetID));
 }
 
