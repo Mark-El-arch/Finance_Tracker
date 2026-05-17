@@ -1,8 +1,8 @@
 import { transactions, filterTransactions, monthMap } from "./transactions.js";
-import { budgets, getAllBudgetStatuses, getBudgetStatus } from "./budget.js"
+import { budgets, getAllBudgetStatuses, getBudgetStatus } from "./finovo/src/logic/budget.ts"
 import { addGoal,contributeToGoal,getGoalProgress,savingsGoals } from "./savings.js";
 import { getMonthlySummary, getCategoryBreakdown } from "./report.js";
-import { getDashboardSummary } from "./dashboard.js";
+import { getDashboardSummary } from "./finovo/src/logic/dashboard.ts";
 
 // console.log("All Food:", filterTransactions({ category: "Food" }));
 // console.log("March only:", filterTransactions({ month: "MARCH" }));

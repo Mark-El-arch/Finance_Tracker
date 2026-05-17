@@ -1,7 +1,7 @@
-import { getTotalBalance } from "./transactions.ts";
-import { getAllBudgetStatuses } from "./budget.ts";
-import { getAllGoalProgress } from "./savings.ts";
-import { getMonthlySummary } from "./report.ts";
+import { getTotalBalance } from "./transactions";
+import { getAllBudgetStatuses } from "./budget";
+import { getAllGoalProgress } from "./savings";
+import { getMonthlySummary } from "./report";
 import type { Month, GetDashboardSummary} from "./types.ts";
 
 function getDashboardSummary(month: Month): GetDashboardSummary {

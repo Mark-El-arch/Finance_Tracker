@@ -1,4 +1,4 @@
-import { filterTransactions, monthMap } from "./transactions.ts"
+import { filterTransactions, monthMap } from "./transactions"
 import type { Budget, BudgetStatus, GetBudgetStatus } from "./types.ts"
 
 

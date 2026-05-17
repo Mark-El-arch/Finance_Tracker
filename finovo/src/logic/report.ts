@@ -1,4 +1,4 @@
-import { transactions, filterTransactions, monthMap } from "./transactions.ts";
+import { transactions, filterTransactions, monthMap } from "./transactions";
 import type { Month, GetMonthlySummary } from "./types.ts";
 
 
