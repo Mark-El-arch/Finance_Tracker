@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
+import { useFocusEffect } from 'expo-router'
 import {
   getTransactions,
   addTransaction,
@@ -64,9 +65,10 @@ export function useTransactions() {
     }
   }, [])
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     fetchTransactions()
   }, [fetchTransactions])
+)
 
   // Client-side filtering — no extra network calls
   const filteredTransactions = transactions.filter(tx => {

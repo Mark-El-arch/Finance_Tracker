@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
+import { useFocusEffect } from 'expo-router'
 import { getMonthlyStats, getCategoryBreakdown, getTransactions } from '../lib/transactionsDb'
 
 interface MonthlyStats {
@@ -48,9 +49,9 @@ export function useReports(initialMonth?: number, initialYear?: number) {
     }
   }, [month, year])
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     fetchReports()
-  }, [fetchReports])
+  }, [fetchReports]))
 
   // Filter transactions to just the selected month/year for the report
   const monthlyTransactions = transactions.filter(tx => {

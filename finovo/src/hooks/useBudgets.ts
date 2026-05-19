@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
+import { useFocusEffect } from 'expo-router'
 import { addBudget, deleteBudget, getBudgetStatuses } from '../lib/budgetDb'
 import { getWallets, addTransaction } from "../lib/transactionsDb"
 
@@ -47,9 +48,9 @@ export function useBudgets(initialMonth?: number, initialYear?: number) {
     }
   }, [month, year])
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     fetchBudgets()
-  }, [fetchBudgets])
+  }, [fetchBudgets]))
 
   const handleAdd = async (category: string, limitAmount: number) => {
     setMutating(true)

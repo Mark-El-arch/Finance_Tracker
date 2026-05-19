@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState , useCallback } from 'react'
+import { useFocusEffect } from 'expo-router'
 import {
   getSavingsGoalProgress,
   addSavingsGoal,
@@ -37,9 +38,10 @@ export function useSavings() {
     }
   }, [])
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     fetchGoals()
   }, [fetchGoals])
+)
 
   const handleAdd = async (name: string, targetAmount: number, deadline: string) => {
     setMutating(true)

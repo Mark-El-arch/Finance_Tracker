@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
+import { useFocusEffect } from 'expo-router'
 import { getTotalBalance, getMonthlyStats, getWallets, getTransactions, addWallet } from '../lib/transactionsDb'
 import { supabase } from '../lib/supabase'
 
@@ -61,9 +62,9 @@ export function useDashboard() {
     }
   }, [month, year])
 
-  useEffect(() => {
+  useFocusEffect(useCallback(() => {
     fetchAll()
-  }, [fetchAll])
+  }, [fetchAll]))
 
   const handleAddWallet = async (name: string, type: string) => {
     setMutating(true)
