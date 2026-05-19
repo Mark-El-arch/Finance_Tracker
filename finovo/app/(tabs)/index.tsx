@@ -64,7 +64,7 @@ export default function DashboardScreen() {
             onPress={() => router.push('/account')}
           >
             <Text style={styles.headerAvatarText}>
-              {userName.slice(0, 2).toUpperCase() || '?'}
+              {userName.slice(0, 2).toUpperCase() || ' '}
             </Text>
           </TouchableOpacity>
         </View>
